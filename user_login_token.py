@@ -53,10 +53,10 @@ def token_decode(token) -> str:
 
 '''生成一个返回体'''
 def response_body_login(msg,user_id=None):
-    response_msg = [
-        {"msg":msg},
-        {"token":token_encode(user_id)}
-    ]
+    response_msg = {
+        "msg":msg,
+        "token":token_encode(user_id)
+    }
     return jsonify(response_msg)
 
 '''
@@ -70,8 +70,8 @@ def response_body_login(msg,user_id=None):
 @app.route('/users/login',methods=['POST'])
 def users_login():
     if request.method == "POST":
-        user_id = request.form.get("user_id")
-        user_password = request.form.get("user_password")
+        user_id = request.json.get("user_id")
+        user_password = request.json.get("user_password")
 
         for user_dict in users_list:
             if user_dict["user_id"] == user_id:
